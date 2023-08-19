@@ -1,0 +1,10 @@
+[MonD]
+SkinName=lazydev
+Author=modkavartini
+Version=1.0
+HeaderImage=#@#\lazy.bmp
+LoadType=Skin
+Load=.lazydev\editor.ini
+;PreviewImage=
+ProfilePicture=https://avatars.githubusercontent.com/u/81793953
+;Description=
