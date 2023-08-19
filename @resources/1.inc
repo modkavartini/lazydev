@@ -11,7 +11,7 @@ updateDivider=-1
 [latest]
 measure=webparser
 url=https://api.github.com/repos/[#gh]/releases/latest
-regexp=(?siU).*"name":"v(.*)".*"browser_download_url":(.*),
+regexp=(?siU).*"name":"v(.*)".*"browser_download_url":"(.*)"
 stringindex=1
 substitute="":"[#version]"
 
