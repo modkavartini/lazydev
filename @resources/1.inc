@@ -1,10 +1,9 @@
 [variables]
 version=1.0.0
-gh=modkavartini/lazydev
 
 [latest]
 measure=webparser
-url=https://api.github.com/repos/[#gh]/releases/latest
+url=https://api.github.com/repos/modkavartini/lazydev/releases/latest
 regexp=(?siU).*"name":"v(.*)"
 stringindex=1
 substitute="":"[#version]"
@@ -22,8 +21,7 @@ dynamicvariables=1
 
 [hasUp]
 measure=calc
-formula=1
-;[&lVerNum]>[&cVerNum]?1:0
+formula=[&lVerNum]>[&cVerNum]?1:0
 ifEqualValue=1
 ifEqualAction=[!setOption display meterStyle text|upAvailable][!updateMeter text][!redraw]
 dynamicVariables=1
