@@ -1,5 +1,7 @@
 [variables]
 
+;edit these variables with editor.ini loaded. ctrl+s to save yourself the hassle :)
+
 ;  ██████  ██████  ███    ███ ███    ███  ██████  ███    ██ 
 ; ██      ██    ██ ████  ████ ████  ████ ██    ██ ████   ██ 
 ; ██      ██    ██ ██ ████ ██ ██ ████ ██ ██    ██ ██ ██  ██ 
@@ -14,11 +16,6 @@ red=243,139,168
 W=350
 padding=21
 cornerRoundness=15
-
-;initial values
-editing=loading...
-action=[]
-highlight=text
 
 showIcon=0
 ;show an icon to the right
@@ -39,6 +36,11 @@ checkForUpdates=1
 
 editorText=editing:
 dedEditor=ded skin xd
+
+;initial values
+editing=loading...
+action=[]
+highlight=text
 
 excluded=catppuccin\\bar\\bg$
 ;configs set in the above variable will be ignored by the skin.
