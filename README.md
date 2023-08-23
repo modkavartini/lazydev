@@ -5,7 +5,7 @@ a skin to help make skins
 lazydev detects the `.ini`, `.inc`, `.lua` or `.ps1` file that you're editing and refreshes the appropriate active rainmeter skin(s) upon ctrl+s
 
 ## preview
-
+### editor.ini
 detected a single skin:
 
 ![active](https://github.com/modkavartini/lazydev/assets/81793953/ef654368-4bc1-4397-b1ee-f5d06fedb03b)
@@ -17,6 +17,9 @@ detected more than one skins:
 did not detect any active skins:
 
 ![ded](https://github.com/modkavartini/lazydev/assets/81793953/1d0e9b5e-45d2-4853-aad7-bbae8d606ddd)
+
+### focus.ini
+i have included a simpler variant which selects the skin when you ctrl+click on it. can be used if the main variant is not meeting your needs.
 
 ### note
 * lazydev detects any active configs under the rootConfig of the opened `@include` file, irrespective of whether the file is `@include`d in the detected skin or not.
