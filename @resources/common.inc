@@ -1,0 +1,9 @@
+[rainmeter]
+update=100
+defaultWindowX=50%
+defaultWindowY=50%
+defaultAnchorX=50%
+defaultAnchorY=50%
+onRefreshAction=[!writeKeyValue metadata version "#version#"][!writeKeyValue MonD Version "#version#" "#@#mond.inc"]
+contextTitle2=edit variables
+contextAction2=["#@#variables.inc"]
