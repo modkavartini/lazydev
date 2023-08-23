@@ -3,13 +3,12 @@ $settingsIniPath=$RmAPI.VariableStr("settingsPath") + "Rainmeter.ini"
 $excluded=$RmAPI.VariableStr("excluded") -replace '^$','thiswillnevermatchanythingoktrustmebro'
 $seperator=$RmAPI.VariableStr("CRLF")
 $showConfigs=$RmAPI.Variable("showConfigs")
-$ded=$RmAPI.VariableStr("ded")
-$prev="ehehehehehehehehe.ini"
+$defaultAction=$RmAPI.VariableStr("defaultAction")
+$dedEditor=$RmAPI.VariableStr("dedEditor")
 
 function getConfig {
     param([string] $file)
     if($file -notmatch ".ini$|.inc$|.ps1$|.lua$") { break }
-    if($file -match $prev) { break }
     $skinsPathR=[regex]::escape($skinsPath)
     $script:added=0
     $script:editing=$null
@@ -17,23 +16,28 @@ function getConfig {
     get-ChildItem $skinsPath $file -r | where-Object { ($_.Name -ceq $file) -and ($_.FullName -notmatch "@Backup") } | forEach-Object {
         $config=$_.fullname -replace "$skinsPathR|\\$file",''
         $root=$config -replace '\\.*',''
-        if($config -match $excluded) { break }
+        if($config -match $excluded) { excludedConfig }
         if($file -match ".ini$") { checkIni("$config") }
         if($file -match ".inc$|.ps1$|.lua$") { checkInc("$root") }
     }
-    $script:prev=$file
 }
 
 function setConfig {
-    $RmAPI.Bang("!setvariable action `"`"`"$action`"`"`"")
-    $RmAPI.Bang("!setvariable editing `"$editing`"")
-    $RmAPI.Bang("!setvariable highlight `"green`"")
+    $RmAPI.Bang("!setVariable action `"`"`"$action`"`"`"")
+    $RmAPI.Bang("!setVariable editing `"$editing`"")
+    $RmAPI.Bang("!setVariable highlight `"green`"")
 }
 
 function dedConfig {
-    $RmAPI.Bang("!setvariable action `"[]`"")
-    $RmAPI.Bang("!setvariable editing `"$ded`"")
-    $RmAPI.Bang("!setvariable highlight `"red`"")
+    $RmAPI.Bang("!setVariable action `"`"`"$defaultAction`"`"`"")
+    $RmAPI.Bang("!setVariable editing `"$dedEditor`"")
+    $RmAPI.Bang("!setVariable highlight `"red`"")
+}
+
+function excludedConfig {
+    $RmAPI.Bang("!setVariable editing `"excluded!`"")
+    $RmAPI.Bang("!setVariable highlight `"red`"")
+    break
 }
 
 function checkIni {
@@ -69,4 +73,9 @@ function checkInc {
     }
     setConfig
     if($added -eq 0) { dedConfig }
+}
+
+function minimizeAll {
+    $shell=new-Object -ComObject Shell.Application
+    $shell.minimizeAll()
 }
