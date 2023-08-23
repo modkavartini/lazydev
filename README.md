@@ -23,7 +23,7 @@ i have included a simpler variant which selects the skin when you ctrl+click on 
 
 ### note
 * lazydev detects any active configs under the rootConfig of the opened `@include` file, irrespective of whether the file is `@include`d in the detected skin or not.
-* lazydev can only detect the files opened in notepad/notepad++/visual studio code by default. if you use any other editor you can [add it](https://github.com/modkavartini/lazydev/blob/main/editor.ini#L93) by editing the skin file.
+* lazydev can only detect the files opened in notepad/notepad++/visual studio code by default. if you use any other editor you can add it by editing the variable file.
 
 ### credits
 #### plugins:
