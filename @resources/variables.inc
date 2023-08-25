@@ -38,9 +38,9 @@ editorText=editing:
 dedEditor=ded skin xd
 
 ;initial values
-editing=loading...
+editing=edit a skin!
 action=[]
-highlight=text
+highlight=red
 
 excluded=catppuccin\\bar\\bg$
 ;configs set in the above variable will be ignored by the skin.
