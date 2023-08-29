@@ -76,7 +76,7 @@ function checkInc {
     }
     setConfig
     if($added -eq 0) { dedConfig }
-    if($excluded -eq $added) { excConfig }
+    if(($added -ne 0) -and ($excluded -eq $added)) { excConfig }
 }
 
 function minimizeAll {
