@@ -42,7 +42,7 @@ editing=edit a skin!
 action=[]
 highlight=red
 
-excluded=catppuccin\\bar\\bg$
+exclude=.lazydev|catppuccin\\bar\\assist\\bg$
 ;configs set in the above variable will be ignored by the skin.
 ;it is used as a regexp match. hence, regexps are allowed.
 ;this also means that you have to escape your backslashes :)
