@@ -1,9 +1,9 @@
 [MonD]
 SkinName=lazydev
 Author=modkavartini
-Version=1.1.2
+Version=1.2.0
 HeaderImage=#@#\lazy.bmp
-VariableFiles=#@#variables.inc
+VariableFiles=#@#lazyVars.inc
 LoadType=Skin
 Load=.lazydev\editor.ini
 PreviewImage=https://repository-images.githubusercontent.com/680623177/42ae98e7-d7d2-4c9e-b17b-c9c5b71124aa
