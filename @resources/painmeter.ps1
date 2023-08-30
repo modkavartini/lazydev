@@ -46,13 +46,20 @@ function checkIni {
     get-Content $settingsIniPath | select-String "\[$checkR\]" -context 1 | forEach-Object {
         $result=$_.Context.PostContext -replace '[^\d]',''
         if($result -gt 0) {
-            $script:action+="[!refresh `"$config`"]"
-            $script:editing+="$config" + "$seperator"
+            if($config -match $exclude) { 
+                $script:action+="[]" 
+                $script:excluded++
+            }
+            else {
+                $script:action+="[!refresh `"$config`"]"
+                $script:editing+="$config" + "$seperator"
+            }
             $script:added++
         }
     }
     setConfig
     if($added -eq 0) { dedConfig }
+    if(($added -ne 0) -and ($excluded -eq $added)) { excConfig }
 }
 
 function checkInc {
