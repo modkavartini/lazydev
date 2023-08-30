@@ -1,7 +1,5 @@
 [variables]
 
-;edit these variables with editor.ini loaded. ctrl+s to save yourself the hassle :)
-
 ;  ██████  ██████  ███    ███ ███    ███  ██████  ███    ██ 
 ; ██      ██    ██ ████  ████ ████  ████ ██    ██ ████   ██ 
 ; ██      ██    ██ ██ ████ ██ ██ ████ ██ ██    ██ ██ ██  ██ 
