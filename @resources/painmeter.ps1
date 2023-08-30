@@ -1,10 +1,14 @@
 $skinsPath=$RmAPI.VariableStr("skinsPath")
 $settingsIniPath=$RmAPI.VariableStr("settingsPath") + "Rainmeter.ini"
+$rootConfig=$RmAPI.VariableStr("rootConfig")
 $exclude=$RmAPI.VariableStr("exclude") -replace '^$','thiswillnevermatchanythingoktrustmebro'
 $seperator=$RmAPI.VariableStr("CRLF")
 $showConfigs=$RmAPI.Variable("showConfigs")
 $defaultAction=$RmAPI.VariableStr("defaultAction")
 $dedEditor=$RmAPI.VariableStr("dedEditor")
+$excludedText=$RmAPI.VariableStr("excludedText")
+$excludedAction=$RmAPI.VariableStr("excludedAction")
+$excludeInis=$RmAPI.Variable("excludeInis")
 
 function getConfig {
     param([string] $file)
@@ -17,6 +21,7 @@ function getConfig {
     get-ChildItem $skinsPath $file -r | where-Object { ($_.Name -ceq $file) -and ($_.FullName -notmatch "@Backup") } | forEach-Object {
         $config=$_.fullname -replace "$skinsPathR|\\$file",''
         $root=$config -replace '\\.*',''
+        if(($file -match "lazyVars.inc") -and ($root -match $rootConfig)) { editingVars }
         if($file -match ".ini$") { checkIni("$config") }
         if($file -match ".inc$|.ps1$|.lua$") { checkInc("$root") }
     }
@@ -35,9 +40,16 @@ function dedConfig {
 }
 
 function excConfig {
-    $RmAPI.Bang("!setVariable action `"[]`"")
-    $RmAPI.Bang("!setVariable editing `"excluded!`"")
+    $RmAPI.Bang("!setVariable action `"`"`"$excludedAction`"`"`"")
+    $RmAPI.Bang("!setVariable editing `"$excludedText`"")
     $RmAPI.Bang("!setVariable highlight `"red`"")
+}
+
+function editingVars {
+    $RmAPI.Bang("!setVariable action `"[!refresh]`"")
+    $RmAPI.Bang("!setVariable editing `"lazydev variables`"")
+    $RmAPI.Bang("!setVariable highlight `"blue`"")
+    break
 }
 
 function checkIni {
@@ -46,7 +58,7 @@ function checkIni {
     get-Content $settingsIniPath | select-String "\[$checkR\]" -context 1 | forEach-Object {
         $result=$_.Context.PostContext -replace '[^\d]',''
         if($result -gt 0) {
-            if($config -match $exclude) { 
+            if(($config -match $exclude) -and ($excludeInis -eq 1)) { 
                 $script:action+="[]" 
                 $script:excluded++
             }
@@ -59,7 +71,7 @@ function checkIni {
     }
     setConfig
     if($added -eq 0) { dedConfig }
-    if(($added -ne 0) -and ($excluded -eq $added)) { excConfig }
+    if(($added -ne 0) -and ($excluded -eq $added) -and ($excludeInis -eq 1)) { excConfig }
 }
 
 function checkInc {
