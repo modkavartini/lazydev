@@ -18,7 +18,7 @@ function getConfig {
     $script:excluded = 0
     $script:editing = $null
     $script:action = $null
-    get-ChildItem $skinsPath $file -r | where-Object { ($_.name -ceq $file) -and ($_.fullName -notmatch "@Backup") } | forEach-Object {
+    get-ChildItem $skinsPath $file -r | where-Object { ($_.name -ceq $file) -and ($_.fullName -notmatch "@Backup|JaxCore") } | forEach-Object {
         if ($file -match "Rainmeter.ini") { editingRMS }
         $config = $_.fullname -replace "$skinsPathR|\\$file",''
         $root = $config -replace '\\.*',''
