@@ -1,7 +1,7 @@
 [MonD]
 SkinName=lazydev
 Author=modkavartini
-Version=1.2.0
+Version=1.2.1
 HeaderImage=#@#\lazy.bmp
 VariableFiles=#@#lazyVars.inc
 LoadType=Skin
