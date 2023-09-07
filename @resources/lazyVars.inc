@@ -18,7 +18,7 @@ green4=0,255,0
 red4=255,0,0
 blue4=0,0,255
 
-scheme=3
+scheme=2
 ;0-3 are catppuccin colors.
 ;4 and any more you add will be custom.
 ;you may add custom colors starting with the index 4 and so on.
