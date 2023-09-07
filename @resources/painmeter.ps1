@@ -26,6 +26,7 @@ function getConfig {
         if ($file -match ".ini$") { checkIni("$config") }
         if ($file -match ".inc$|.ps1$|.lua$") { checkInc("$root") }
     }
+    $RmAPI.Bang("!setVariable configSet 1")
 }
 
 function setConfig {
@@ -50,6 +51,7 @@ function editingVars {
     $RmAPI.Bang("!setVariable action `"[!refresh]`"")
     $RmAPI.Bang("!setVariable editing `"lazydev variables`"")
     $RmAPI.Bang("!setVariable highlight `"blue`"")
+    $RmAPI.Bang("!setVariable configSet 1")
     break
 }
 
@@ -57,6 +59,7 @@ function editingRMS {
     $RmAPI.Bang("!setVariable action `"[!refreshApp]`"")
     $RmAPI.Bang("!setVariable editing `"rainmeter settings`"")
     $RmAPI.Bang("!setVariable highlight `"blue`"")
+    $RmAPI.Bang("!setVariable configSet 1")
     break
 }
 
