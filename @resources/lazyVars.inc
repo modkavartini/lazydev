@@ -8,18 +8,31 @@
 ; ██      ██    ██ ██  ██  ██ ██  ██  ██ ██    ██ ██  ██ ██ 
 ;  ██████  ██████  ██      ██ ██      ██  ██████  ██   ████ 
 
-bg=17,17,27
-text=205,214,244
-green=166,227,161
-red=243,139,168
-blue=137,180,250
+@include=#@#catbussin.inc
 
-W=350
+;custom colors.
+
+bg4=0,0,0
+main4=255,255,255
+green4=0,255,0
+red4=255,0,0
+blue4=0,0,255
+
+scheme=3
+;0-3 are catppuccin colors.
+;4 and any more you add will be custom.
+;you may add custom colors starting with the index 4 and so on.
+
+bg=[#bg[#scheme]]
+text=[#main[#scheme]]
+green=[#green[#scheme]]
+red=[#red[#scheme]]
+blue=[#blue[#scheme]]
+
+textSize=13
+maxWidth=350
 padding=21
 cornerRoundness=15
-
-showIcon=0
-;show an icon to the right.
 
 defaultAction=[]
 ;the action to execute if ctrl+s is pressed without any detected skins.
@@ -37,7 +50,7 @@ checkForUpdates=1
 
 editorText=editing:
 dedEditor=ded skin xd
-excludedText=excluded!
+excludedText=excluded file!
 
 ;initial values
 editing=edit a skin!
