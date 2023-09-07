@@ -1,5 +1,5 @@
 [variables]
-version=1.2.1
+version=1.2.2
 
 [latest]
 measure=webparser
@@ -30,4 +30,5 @@ dynamicVariables=1
 text=an update is available.#CRLF#click here to install!
 fontColor=[#green]
 inlineSetting=color|[#red]
+inlinePattern=#CRLF#(.*)
 leftMouseUpAction=[!commandMeasure psrm "minimizeAll"][powershell "#@#update.ps1"]
