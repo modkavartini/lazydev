@@ -2,111 +2,88 @@ $skinsPath = $RmAPI.VariableStr("skinsPath")
 $settingsIniPath = $RmAPI.VariableStr("settingsPath") + "Rainmeter.ini"
 $rootConfig = $RmAPI.VariableStr("rootConfig")
 $exclude = $RmAPI.VariableStr("exclude") -replace '^$','thiswillnevermatchanythingoktrustmebro'
-$seperator = $RmAPI.VariableStr("CRLF")
+$separator = if ($RmAPI.Variable("compactMode") -eq 1) { " & " } else { "`n" }
 $showConfigs = $RmAPI.Variable("showConfigs")
-$defaultAction = $RmAPI.VariableStr("defaultAction")
+$dedAction = $RmAPI.VariableStr("defaultAction")
 $dedEditor = $RmAPI.VariableStr("dedEditor")
-$excludedText = $RmAPI.VariableStr("excludedText")
-$excludedAction = $RmAPI.VariableStr("excludedAction")
+$excText = $RmAPI.VariableStr("excludedText")
+$excAction = $RmAPI.VariableStr("excludedAction")
 $excludeInis = $RmAPI.Variable("excludeInis")
 
 function getConfig {
     param([string] $file)
     if ($file -notmatch ".ini$|.inc$|.ps1$|.lua$") { break }
     $skinsPathR = [regex]::escape($skinsPath)
-    $script:added = 0
-    $script:excluded = 0
-    $script:editing = $null
-    $script:action = $null
+    $added = 0
+    $excluded = 0
     get-ChildItem $skinsPath $file -r | where-Object { ($_.name -ceq $file) -and ($_.fullName -notmatch "@Backup|JaxCore") } | forEach-Object {
-        if ($file -match "Rainmeter.ini") { editingRMS }
-        $config = $_.fullname -replace "$skinsPathR|\\$file",''
+        if ($file -match "Rainmeter.ini") { setVars -a '!refreshApp' -e 'rainmeter settings' -h blue -b }
+        $config = $_.fullName -replace "$skinsPathR|\\$file",''
         $root = $config -replace '\\.*',''
-        if (($file -match "lazyVars.inc") -and ($root -match $rootConfig)) { editingVars }
-        if ($file -match ".ini$") { checkIni("$config") }
-        if ($file -match ".inc$|.ps1$|.lua$") { checkInc("$root") }
-    }
-    $RmAPI.Bang("!setVariable configSet 1")
-}
-
-function setConfig {
-    $RmAPI.Bang("!setVariable action `"`"`"$action`"`"`"")
-    $RmAPI.Bang("!setVariable editing `"$editing`"")
-    $RmAPI.Bang("!setVariable highlight `"green`"")
-}
-
-function dedConfig {
-    $RmAPI.Bang("!setVariable action `"`"`"$defaultAction`"`"`"")
-    $RmAPI.Bang("!setVariable editing `"$dedEditor`"")
-    $RmAPI.Bang("!setVariable highlight `"red`"")
-}
-
-function excConfig {
-    $RmAPI.Bang("!setVariable action `"`"`"$excludedAction`"`"`"")
-    $RmAPI.Bang("!setVariable editing `"$excludedText`"")
-    $RmAPI.Bang("!setVariable highlight `"red`"")
-}
-
-function editingVars {
-    $RmAPI.Bang("!setVariable action `"[!refresh]`"")
-    $RmAPI.Bang("!setVariable editing `"lazydev variables`"")
-    $RmAPI.Bang("!setVariable highlight `"blue`"")
-    $RmAPI.Bang("!setVariable configSet 1")
-    break
-}
-
-function editingRMS {
-    $RmAPI.Bang("!setVariable action `"[!refreshApp]`"")
-    $RmAPI.Bang("!setVariable editing `"rainmeter settings`"")
-    $RmAPI.Bang("!setVariable highlight `"blue`"")
-    $RmAPI.Bang("!setVariable configSet 1")
-    break
-}
-
-function checkIni {
-    param([string] $config)
-    $checkR = [regex]::escape($config)
-    get-Content $settingsIniPath | select-String "\[$checkR\]" -context 1 | forEach-Object {
-        $result = $_.Context.PostContext -replace '[^\d]',''
-        if ($result -gt 0) {
-            if (($config -match $exclude) -and ($excludeInis -eq 1)) { 
-                $script:action +=  "[]" 
-                $script:excluded++
+        if (($file -match "lazyVars.inc") -and ($root -match $rootConfig)) { setVars -a '!refresh' -e 'lazydev variables' -h blue -b }
+        if ($file -match ".ini$") {
+            $checkR = [regex]::escape($config)
+            get-Content $settingsIniPath | select-String "\[$checkR\]" -context 1 | forEach-Object {
+                $result = $_.context.postContext -replace '[^\d]',''
+                if ($result -gt 0) {
+                    if (($config -match $exclude) -and ($excludeInis -eq 1)) { 
+                        $action += "[]" 
+                        $excluded++
+                    }
+                    else {
+                        $action += "[!refresh `"$config`"]"
+                        $editing += "$config" + "$separator"
+                    }
+                    $added++
+                }
             }
-            else {
-                $script:action +=  "[!refresh `"$config`"]"
-                $script:editing +=  "$config" + "$seperator"
+            if ($added -ne 0) { setVars -a $action -e $editing -h green }
+            if ($added -eq 0) { setVars -a $dedAction -e $dedEditor -h red }
+            if (($added -ne 0) -and ($excluded -eq $added) -and ($excludeInis -eq 1)) { setVars -a $excAction -e $excText -h red }
+        }
+        if ($file -match ".inc$|.ps1$|.lua$") {
+            $checkR = [regex]::escape($root)
+            get-Content $settingsIniPath | select-String "\[$checkR.*\]" -context 1 | forEach-Object {
+                $found = $_.line -replace '\[|\]',''
+                $result = $_.context.postContext -replace '[^\d]',''
+                if ($result -gt 0) {
+                    if ($found -match $exclude) { 
+                        $action += "[]" 
+                        $excluded++
+                    }
+                    else { 
+                        $action += "[!refresh `"$found`"]"
+                        if ($showConfigs -eq 1) { $editing += "$found" + "$separator" }
+                        else { $editing += "$config" + "$separator" }
+                    }
+                    $added++
+                }
             }
-            $script:added++
+            if ($added -ne 0) { setVars -a $action -e $editing -h green }
+            if ($added -eq 0) { setVars -a $dedAction -e $dedEditor -h red }
+            if (($added -ne 0) -and ($excluded -eq $added)) { setVars -a $excAction -e $excText -h red }
         }
     }
-    setConfig
-    if ($added -eq 0) { dedConfig }
-    if (($added -ne 0) -and ($excluded -eq $added) -and ($excludeInis -eq 1)) { excConfig }
 }
 
-function checkInc {
-    param([string] $config)
-    $checkR = [regex]::escape($config)
-    get-Content $settingsIniPath | select-String "\[$checkR.*\]" -context 1 | forEach-Object {
-        $found = $_.Line -replace '\[|\]',''
-        $result = $_.Context.PostContext -replace '[^\d]',''
-        if ($result -gt 0) {
-            if ($found -match $exclude) { 
-                $script:action +=  "[]" 
-                $script:excluded++
-            }
-            else { 
-                $script:action +=  "[!refresh `"$found`"]"
-                if ($showConfigs -eq 1) { $script:editing +=  "$found" + "$seperator" }
-                else { $script:editing +=  "$config" }
-            }
-            $script:added++
-        }
-    }
-    setConfig
-    if ($added -eq 0) { dedConfig }
-    if (($added -ne 0) -and ($excluded -eq $added)) { excConfig }
+$separatorR = [regex]::escape($separator)
+
+function setVars {
+    param(
+        [string]
+        $a,
+        [string]
+        $e,
+        [string]
+        $h,
+        [switch]
+        $b
+    )
+    $e = $e -replace "$separatorR$",""
+    $RmAPI.Bang("!setVariable action `"`"`"$a`"`"`"")
+    $RmAPI.Bang("!setVariable editing `"`"`"$e`"`"`"")
+    $RmAPI.Bang("!setVariable highlight `"`"`"$h`"`"`"")
+    if ($b) { break }
 }
 
 function minimizeAll {
