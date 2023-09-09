@@ -31,7 +31,7 @@ blue=[#blue[#scheme]]
 
 textSize=13
 maxWidth=350
-padding=21
+padding=17
 cornerRoundness=15
 
 defaultAction=[]
@@ -42,6 +42,18 @@ checkForUpdates=1
 ;0 or 1
 ;notifies you of any available updates to the skin.
 
+compactMode=1
+;if = 1, shows ONLY the config names and puts everything on a single line. #maxWidth# is still applicable.
+;if = 0, shows `#editorText#` or `#focusText#` above the config(s).
+;also when = 1, `#editorText#`, `#focusText#`, `#textSeparator#` and `#configSeparator#` are obsolete.
+
+compactSepColor=[#blue]
+;the color of the `&` separator when `#compactMode#` = 1
+
+textSeparator=#CRLF#
+;the separator between `#editorText#` or `#focusText#` text and the detected config(s).
+;#CRLF# (nextLine) by default.
+
 ; ███████ ██████  ██ ████████  ██████  ██████  
 ; ██      ██   ██ ██    ██    ██    ██ ██   ██ 
 ; █████   ██   ██ ██    ██    ██    ██ ██████  
@@ -51,6 +63,10 @@ checkForUpdates=1
 editorText=editing:
 dedEditor=ded skin xd
 excludedText=excluded file!
+
+configSeparator=#CRLF#
+;the separator between multiple configs if any.
+;#CRLF# by default.
 
 ;initial values
 editing=edit a skin!
@@ -66,7 +82,7 @@ excludeInis=1
 ;if = 1, excludes .ini files if they are from the configs specified in the above variable.
 ;if = 0, does not exclude .ini files but only @inc files.
 
-excludedAction=[]
+excludedAction=#defaultAction#
 ;the action to execute if ctrl+s is pressed when an excluded config is detected.
 
 codeEditors=Code.exe
