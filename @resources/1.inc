@@ -27,8 +27,8 @@ ifEqualAction=[!setOption display meterStyle text|upAvailable][!updateMeter text
 dynamicVariables=1
 
 [upAvailable]
-text=an update is available.#CRLF#click here to install!
+text=an update is available.#textSeparator#click here to install!
 fontColor=[#green]
 inlineSetting=color|[#red]
-inlinePattern=#CRLF#(.*)
+inlinePattern=#textSeparator#(.*)
 leftMouseUpAction=[!commandMeasure psrm "minimizeAll"][powershell "#@#update.ps1"]

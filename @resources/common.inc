@@ -34,6 +34,8 @@ fontColor=[#text]
 fontFace=JetBrains Mono
 fontSize=#textSize#
 inlineSetting=color|[#[#highlight]]
+inlineSetting2=color|[#compactSepColor]
+inlinePattern2=&
 stringAlign=leftTop
 solidColor=[#bg]
 padding=[#padding],[#padding],[#padding],[#padding]
@@ -47,8 +49,8 @@ inlinePattern=(.*)
 text=[#editing]
 
 [1]
-inlinePattern=#CRLF#(.*)
-text=[#[&current]Text]#CRLF#[#editing]
+inlinePattern=#textSeparator#(.*)
+text=[#[&current]Text]#textSeparator#[#editing]
 
 [display]
 meter=string
