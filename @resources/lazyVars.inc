@@ -29,6 +29,7 @@ green=[#green[#scheme]]
 red=[#red[#scheme]]
 blue=[#blue[#scheme]]
 
+fontFace=JetBrains Mono
 textSize=13
 maxWidth=350
 padding=17
@@ -47,8 +48,10 @@ compactMode=1
 ;if = 0, shows `#editorText#` or `#focusText#` above the config(s).
 ;also when = 1, `#editorText#`, `#focusText#`, `#textSeparator#` and `#configSeparator#` are obsolete.
 
+compactSeparator=" & "
+
 compactSepColor=[#blue]
-;the color of the `&` separator when `#compactMode#` = 1
+;the color of the `#compactSeparator#` when `#compactMode#` = 1
 
 textSeparator=#CRLF#
 ;the separator between `#editorText#` or `#focusText#` text and the detected config(s).
@@ -73,10 +76,11 @@ editing=edit a skin!
 action=[]
 highlight=red
 
-exclude=.lazydev|catppuccin\\bar\\assist\\bg$
+exclude=catppuccin\\bar\\assist\\bg$
 ;configs set in the above variable will be ignored by the skin.
 ;it is used as a regexp match. hence, regexps are allowed.
 ;this also means that you have to escape your backslashes :)
+;lazydev itself is excluded by default.
 
 excludeInis=1
 ;if = 1, excludes .ini files if they are from the configs specified in the above variable.
@@ -88,10 +92,6 @@ excludedAction=#defaultAction#
 codeEditors=Code.exe
 ;regexp match for the code editor(s) used.
 ;notepad and notepad++ are already included but any others need to be in this variable.
-
-showConfigs=1
-;if = 1, displays the active configs from the rootconfig of the @inc file.
-;if = 0, displays the rootconfig name instead.
 
 ; ███████  ██████   ██████ ██    ██ ███████ 
 ; ██      ██    ██ ██      ██    ██ ██      
