@@ -31,11 +31,11 @@ disabled=1
 [text]
 container=bg
 fontColor=[#text]
-fontFace=JetBrains Mono
+fontFace=#fontFace#
 fontSize=#textSize#
 inlineSetting=color|[#[#highlight]]
 inlineSetting2=color|[#compactSepColor]
-inlinePattern2=&
+inlinePattern2=[#compactSeparator]
 stringAlign=leftTop
 solidColor=[#bg]
 padding=[#padding],[#padding],[#padding],[#padding]
