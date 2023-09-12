@@ -3,6 +3,7 @@ $settingsIniPath = $RmAPI.VariableStr("settingsPath") + "Rainmeter.ini"
 $rootConfig = $RmAPI.VariableStr("rootConfig")
 $exclude = ($RmAPI.VariableStr("exclude") -replace '^$','thiswillnevermatchanythingoktrustmebro') + "|$rootConfig"
 $separator = if ($RmAPI.Variable("compactMode") -eq 1) { $RmAPI.VariableStr("compactSeparator") } else { $RmAPI.VariableStr("configSeparator") }
+$showConfigs = $RmAPI.Variable("showConfigs")
 $dedAction = $RmAPI.VariableStr("defaultAction")
 $dedEditor = $RmAPI.VariableStr("dedEditor")
 $excText = $RmAPI.VariableStr("excludedText")
@@ -52,7 +53,13 @@ function getConfig {
                     }
                     else { 
                         $action += "[!refresh `"$found`"]"
-                        $editing += "$found" + "$separator"
+                        if ($showConfigs -eq 1) { $editing += "$found" + "$separator" }
+                        else {
+                            if ($addedRoot -ne $root) {
+                            $editing += "$root" + "$separator"
+                            $addedRoot = $root
+                            }
+                        }
                     }
                     $added++
                 }
