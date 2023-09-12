@@ -93,6 +93,10 @@ codeEditors=Code.exe
 ;regexp match for the code editor(s) used.
 ;notepad and notepad++ are already included but any others need to be in this variable.
 
+showConfigs=1
+;if = 1, displays the active configs from the rootconfig of the @inc file.
+;if = 0, displays the rootconfig name instead.
+
 ; ███████  ██████   ██████ ██    ██ ███████ 
 ; ██      ██    ██ ██      ██    ██ ██      
 ; █████   ██    ██ ██      ██    ██ ███████ 
