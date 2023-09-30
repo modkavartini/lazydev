@@ -43,6 +43,7 @@ clipString=2
 clipStringW=([#maxWidth]-[#padding]*2)
 antiAlias=1
 dynamicVariables=1
+hidden=[#hidden]
 
 [0]
 inlinePattern=(.*)
@@ -60,3 +61,4 @@ meterStyle=text|[#configSet]
 meter=shape
 shape=rectangle 0,0,[display:W],[display:H],#cornerRoundness# | strokeWidth 0 
 dynamicVariables=1
+hidden=[#hidden]

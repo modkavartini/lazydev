@@ -72,9 +72,14 @@ configSeparator=#CRLF#
 ;#CRLF# by default.
 
 ;initial values
+
 editing=edit a skin!
 action=[]
 highlight=red
+
+hidden=1
+;if = 1, the skin is invisible on load/refresh and shows itself only after config detection.
+;if = 0, the skin is always visible.
 
 exclude=catppuccin\\bar\\assist\\bg$
 ;configs set in the above variable will be ignored by the skin.
